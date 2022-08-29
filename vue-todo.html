@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.iconscout.com/icon/free/png-256/vuejs-3-1175070.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./vue-todo.css">
+
+    <title>Todo List</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <section id="app" class="container">
+        <h4 class="center-align">{{ title }}</h4>
+        
+        <div class="row">
+            <div class="input-field col s10 ">
+                <i class="material-icons prefix">checklist</i>
+                
+                <input v-model="newTask"  @keyup.enter="addTask" id="task" type="text" autofocus autocomplete="off" >
+                <label class="active " for="task">Task</label>
+            </div>
+            <br>
+            <button @click="addTask" v-bind:disabled="!newTask" class="btn waves-effect waves-red"><i class="material-icons right">add_box</i>Add Task</button>
+        </div>
+        <div class="row">
+            <div class=" col s12 m3 offset-m4 centered hoverable">
+                <ul class="collection center-align">
+                    <li class="collection-item ">
+                        Tareas finalizadas:<span class="new badge blue darken-3">{{checkTasks }}</span>
+                    </li>
+                    <li class="collection-item">
+                        Tareas no finalizadas:<span class="new badge red darken-4">{{uncheckTasks}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="highlight centered ">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Description</th>
+                    <th>Edit / Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(todolist,index) in todolist" :key="index">
+                    <td>
+                        <label>
+                            <input type="checkbox" v-model="todolist.checking" />
+                            <span>{{index+1}}</span>
+                        </label>
+                    </td>
+                    <td :class="{ 'line-through' : todolist.checking === true}">{{ todolist.description }}</td>
+                    <td>
+                        <a @click="editActualTask(index)" class="btn-floating btn-small blue darken-1 "><i class="material-icons">edit</i></a>&nbsp;
+                        <a @click="deletingTask(index)" class="btn-floating btn-small red darken-1 "><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+<script src="../Todo/vue-todo.js"></script>
+</html>
